@@ -1,0 +1,42 @@
+name: in out service CI
+
+on: 
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    
+
+jobs: 
+
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - uses: actions/checkout@v3
+    - name: setupjdk
+      uses: actions/setup-java@v3.5.0
+      with: 
+        java-version: '18'
+        distribution: 'temurin'
+        
+    - name: build with maven
+      run:
+        mvn clean install package
+    
+    - uses: actions/upload-artifact@3.1.0
+      with:
+        name: in-out-service-0.0.1
+        path: target/
+    
+    - run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/in-out-service
+    - name: login to docker hub
+      env: 
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        docker_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCEKR_USER -p $DOCKER_PASSWORD
+    
+    - name: Push the docker image to docker hub
+      run: docker push ${{secrets.DOCKER_USER}}/in-out-service
