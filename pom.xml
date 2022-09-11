@@ -10,7 +10,7 @@
     </parent>
     <groupId>tn.sharing</groupId>
     <artifactId>in-out-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>in-out-service</name>
     <description>in-out-service</description>
     <properties>

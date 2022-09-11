@@ -22,15 +22,13 @@ public class SecheduledLiveInOutJob {
     @Autowired
     private WebClient webClient;
 
+    private int counter = 0;
+
 
     @Scheduled(fixedDelay = 4000L)
     public void liveInOut() {
-        Flux<String> fString = webClient.get().uri("http://localhost:8081/auth/employee/all")
-                .retrieve()
-                .bodyToFlux(String.class)
-                .log();
-
-        fString.subscribe(s -> log.info(s));
+        log.info("hello" + counter);
+        counter ++;
 
 
 
