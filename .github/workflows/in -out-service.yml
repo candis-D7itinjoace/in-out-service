@@ -2,11 +2,7 @@ name: in out service CI
 
 on: 
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-    
-
+    branches: [ "master" ]  
 jobs: 
 
   build:
